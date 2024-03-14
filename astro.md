@@ -125,6 +125,12 @@ Astro tiene muchas integraciones preestablecidas, a la lista se accede con `pnpn
 
 `pnpm astro add tailwind`
 
+## Primer componente
+
+`components/Header.astro`
+- Cargar en el Index el header
+
+
 
 
 
