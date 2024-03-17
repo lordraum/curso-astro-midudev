@@ -25,6 +25,27 @@ src/env.d.ts --> Archivo de typing de Astro
 
 Componente que envuelve partes de la app, funcionan como plantilla.
 
+Al contratio de next js debe declararse para envolver los demás componentes.
+
+### Slot
+
+Funciona similiar qué en web components o a children en react
+
+### Slots nombrados
+
+```js
+// slot nombrado
+<slot name="before"></slot>
+// Utilizando el campo del slot nombrado
+<span slot="before">Soy el contenido de un slot antes de este</span>
+```
+
+Los slot pueden tener contenido por defecto
+
+```js
+<slot>Texto por defecto</slot>
+```
+
 ### Pages
 
 Carpeta que tendrá los archivos que serán las rutas

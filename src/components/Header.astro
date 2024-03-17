@@ -1,5 +1,5 @@
 ---
-console.log("javascript");
+import HeaderButton from "../components/HeaderButton.astro";
 ---
 
 <header class="py-8 px4 mx-auto max-w-xl lg:py-16 lg:px-6">
@@ -10,7 +10,76 @@ console.log("javascript");
   <nav
     class="flex flex-col items-center justify-between w-full text-center md:flex-row"
   >
-    <a class="text-white" href="/">Últimos lanzamientos</a>
-    <a class="text-white" href="/oldest">Los más viejos</a>
+    <HeaderButton link="/">
+      <svg
+        slot="before"
+        xmlns="http://www.w3.org/2000/svg"
+        class="icon icon-tabler icon-tabler-rocket"
+        width="44"
+        height="44"
+        viewBox="0 0 24 24"
+        stroke-width="1.5"
+        stroke="#2c3e50"
+        fill="none"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+        <path
+          d="M4 13a8 8 0 0 1 7 7a6 6 0 0 0 3 -5a9 9 0 0 0 6 -8a3 3 0 0 0 -3 -3a9 9 0 0 0 -8 6a6 6 0 0 0 -5 3"
+        ></path>
+        <path d="M7 14a6 6 0 0 0 -3 6a6 6 0 0 0 6 -3"></path>
+        <path d="M15 9m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"></path>
+      </svg>
+      Últimos lanzamientos</HeaderButton
+    >
+    <HeaderButton link="/new">
+      <svg
+        slot="before"
+        class="w-6 h-6 text-gray-800 dark:text-white"
+        aria-hidden="true"
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        fill="none"
+        viewBox="0 0 24 24"
+      >
+        <path
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M12 8v4l3 3m6-3a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"></path>
+      </svg>
+
+      Los más viejos</HeaderButton
+    >
+    <HeaderButton link="/about">
+      <svg
+        slot="before"
+        class="w-6 h-6 text-gray-800 dark:text-white"
+        aria-hidden="true"
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        fill="none"
+        viewBox="0 0 24 24"
+      >
+        <path
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M10 11h2v5m-2 0h4m-2.592-8.5h.01M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+        ></path>
+      </svg>
+      Sobre el proyecto
+    </HeaderButton>
   </nav>
 </header>
+
+<!-- 
+Copiar botón de la miduconf ====> Crear componente headerButton ====> reemplzarlos por los link del header
+Crear page about ====> añadir contenido acerca
+Añadir svg como slot before 
+-->
