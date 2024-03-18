@@ -149,7 +149,66 @@ Astro tiene muchas integraciones preestablecidas, a la lista se accede con `pnpn
 ## Primer componente
 
 `components/Header.astro`
-- Cargar en el Index el header
+- Cargar en el Index el headerg
+
+## slot
+
+Funciona similar a un children, pero con la funcionalidad adicional de poder declararle un atributo `name` para poder utilizar más de un slot, ejemplo --> `before` `after` y así facilitar la maquetación.
+
+```js
+// Declarando slots
+<a
+  href={link}
+>
+  <slot name="before" />
+  <slot>Contenido por defecto</slot>
+  <slot name="after" />
+</a>
+
+// Instanciando slots
+
+<HeaderButton link="/">
+  <img // slot nombrado
+    slot="before"
+  >
+	<div></div> // slot 
+</HeaderButton>
+```
+
+## Markdown
+
+Astro es totalmente compatible con Markdown, son instalar nada. solo basta con crear un archivo .md es pages y ya lo carga.
+
+### Markdown Front Matter
+
+Espacio del documento dónde se añaden datos y metadatos sobre el documento
+se declara con:
+`---
+ ---`
+
+Pendiente --> Estudiar más a profundidad el tema de markdown y los blogs, sobre todo los `content collections` para definir esquemas.
+
+```markdown
+---
+title: 'Contenido de la página'
+Layout: '../layouts/'Layout.astro
+---
+```
+
+Pendiente revisar y practicar cómo se cargan layouts y componentes en md
+
+## HTML
+
+También es posible cargar páginas y componentes html sin instalar nada.
+
+## Fetching de datos
+
+
+
+
+
+
+
 
 
 
