@@ -4,7 +4,7 @@
 
 ### Islas
 
-Son bloques dinámicos dentro de una arquitectura estática, es decir son bloques de código dentro de una web estática que necesitan código js para funcionar. Por lo tanto Astro no cargo JS en el cliente.
+Son bloques dinámicos dentro de una arquitectura estática, es decir, que cargan JavaScript.
 
 ### Framework agnóstico
 
@@ -195,7 +195,7 @@ Layout: '../layouts/'Layout.astro
 ---
 ```
 
-Pendiente revisar y practicar cómo se cargan layouts y componentes en md
+--------> Pendiente revisar y practicar cómo se cargan layouts y componentes en md
 
 ## HTML
 
@@ -203,16 +203,70 @@ También es posible cargar páginas y componentes html sin instalar nada.
 
 ## Fetching de datos
 
+Se realiza como en js, en el bloque de código js de los archivos astro.
+
+```javascript
+---
+const res = await fetch("https://api.spacexdata.com/v5/launches/query")
+const data = res.json()
+---
+```
+
+## Tipar data para facilitar el autocompletado (typescript)
+
+### quicktype
+
+Herramienta para extraer los tipos desde un JSON --> [quicktype](https://quicktype.io/)
+
+![configuración quicktype typescript](image.png)
+
+**En la web:**
+
+Pagar el json de la data. si se obtiene por medio de la consola (console ninja) utilizar JSON stringify --> const data = `JSON.stringify(await res.json())`
+
+No olvidar cambiar el `Name` --> Servirá para el import --> ejemplo --> `APISpaceXResponse`
+
+**En el espacio de trabajo**
+
+Crear archivo src/types/api.ts --> Pegar los tipos obtenidos
+
+Importar los tipos en el componente donde se va a realizar el fetch de la api --> `import { type APISpaceXResponse } from "../types/api"`
+
+Hacer aserción de tipos al obtener la data
+
+```javascript
+const { docs } = (await res.json()) as APISpaceXResponse
+```
+
+#### Truco JS
+
+Se puede cambiar el nombre de un objeto cuándo se accede por medio de destructuring
+
+`const { docs: launches } = (await res.json()) as APISpaceXResponse`
 
 
+## Iterar elementos
 
+Se puede usar `map` en los elementos, dentro de `{}` similar a JSX, pero no necesita establecer la `key`
 
+```javascript
+<div>
+  {
+    launches.map(
+      ({ id, links, details, flight_number: flightNumber, success }) => (
+        <CardLaunch
+          id={id}
+          img={links.patch.small}
+          details={details}
+          flightNumber={flightNumber}
+          success={success}
+        />
+      ),
+    )
+  }
+</div>
+```
 
+## Renderizado condicional
 
-
-
-
-
-
-
-
+<!-- https://youtu.be/RB5tR_nqUEw -->
