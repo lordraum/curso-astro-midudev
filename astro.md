@@ -65,6 +65,10 @@ import Card from '../components/Card.astro'
 ---
 ```
 
+Este bloque permite crear cualquier tipo de dat javascript que se podrá utilizar en el render.
+
+Al ser javascript, se podrá importar cualquier archivo javascript que se cree en el módulo.
+
 ### Componentes
 
 ```js
@@ -269,4 +273,82 @@ Se puede usar `map` en los elementos, dentro de `{}` similar a JSX, pero no nece
 
 ## Renderizado condicional
 
-<!-- https://youtu.be/RB5tR_nqUEw -->
+Todo lo que se cree dentro del bloque de javascript (vrobales, constantes, arrays, objetos, etc) de los archivos astro, se puede utilizar dentro del render, tanto en los loop como en el renderizado condicional.
+
+### Directiva class:list
+
+Utilidad que se le puede pasar un array, que va a contener las clases que seguro va a tener el elemento, y un objeto que contendrá items que como clave tendrán las clases que se renderizarán de forma condicional y como valor la variable o condición. 
+
+```javascript
+---
+// ...
+// condición
+const launchStatus = success ? "Success" : "Fail";
+---
+//...
+  <span
+    class:list={[
+      // clases fijas que tendrá el elemento
+      "text-xs font-semibold mr-2 px-2.5 py-0.5 rounded",
+      {
+        // clases opcionales según condición
+        // clases: condición
+        "bg-green-400 text-green-900": success,
+        "bg-red-400 text-red-900": !success,
+      },
+    ]}
+  >
+  </span>
+
+```
+
+## Error 404 not found
+
+La página de error 404 se crea cómo `/pages/404.astro` y se cargará automáticamente cuando no exista el recurso solicitado.
+
+## URL's dinámicas
+
+Se crea una archivo de página con el nombre entre `[]` el cuál será los parámetros de la url. --> Ejemplo --> `pages/launch/[id].astro`
+
+Se accederá a query params a través de `Astro.params` --> `const { id } = Astro.params`
+
+
+ ### getStaticPaths
+
+Cómo Astro genera páginas estáticas y los parámetros son dinámicos, se debe indicar a Astro que query params deseamos que generen rutas estáticas previamente.
+
+Esta sería la forma de indicar de forma manual el query param estático.
+
+```javascript
+export function getStaticPaths() {
+  return [{ params: { id: "5eb87cd9ffd86e000604b32a" } }];
+}
+```
+
+Pero de esta forma habría que colocar cada una de los parámeetros que va a generar una págian estática.
+
+### staticPaths a travez de API
+
+Llamando a la API se puede indicar todos las rutas estáticas que queremos generar a travez de parámetros dinámicos.
+
+Esto se realiza a través de un map, no olvidar volver la función asíncrona.
+
+```js
+export async function getStaticPaths() {
+  const launches = await getLatestLaunches(); // Obtenemos los elementos renderizados que continene enlaces dinámicos
+
+  return launches.map((launch) => ({
+    params: { id: launch.id },
+  }));
+}
+```
+
+### ¿Cuándo usar getStaticPaths?
+
+Cuando el número de páginas estáticas a generar a través de url dinámica es finito. Ejemplo --> Una tienda online que tiene 500 productos.
+
+No tendría sentido usarse para contenido que se está generando dinámicamente todo el tiempo. Ejemplo --> tweets de X twitter, ya que esto generaría millones de páginas estáticas, que deben ser desplegadas.
+
+## SSR
+
+<!-- https://youtu.be/RB5tR_nqUEw?t=4879 -->
