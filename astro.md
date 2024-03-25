@@ -312,7 +312,6 @@ Se crea una archivo de página con el nombre entre `[]` el cuál será los pará
 
 Se accederá a query params a través de `Astro.params` --> `const { id } = Astro.params`
 
-
  ### getStaticPaths
 
 Cómo Astro genera páginas estáticas y los parámetros son dinámicos, se debe indicar a Astro que query params deseamos que generen rutas estáticas previamente.
