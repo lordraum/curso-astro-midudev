@@ -350,4 +350,60 @@ No tendría sentido usarse para contenido que se está generando dinámicamente 
 
 ## SSR
 
-<!-- https://youtu.be/RB5tR_nqUEw?t=4879 -->
+Astro también puede ofrecer contenido desde el servidor, es decir servir páginas de forma dinámica.
+
+### Establecer modo SSR
+
+/astro.config.mjs --> output: --> opciones -->
+  - server --> 100% server side
+  - hybrid --> Mixto entre server side y estático
+    - Por defecto la página es estática --> Para que funciones en modo server agregar --> ` export const prerender = false `
+
+```js
+export default defineConfig({
+  integrations: [tailwind()],
+  output: 'server'
+})
+```
+
+De esta forma no se necesita el getStaticPaths para funcionar, pero requiere de un servidor.
+
+Las páginas que estén en modo SSR, tienen más opciones de configuración como `Astro.cookies`, `Astro.response` por ejemplo para proteger las rutas.
+
+### view transitions
+
+`import { ViewTransitions } from "astro:transitions"`
+
+Se carga en el head como si fuera un componente.
+
+```js
+<head>
+//...
+<title>{title}</title>
+		<ViewTransitions />
+</head>
+```
+
+Esto carga una animación automática entre páginas.
+
+## Islas --> Componentes interactivos
+
+### Integración Preact
+
+Por defecto Astro no carga Javascript, por tanto necesita que le indiquemos, los componentes en los que queremos que se cargue.
+
+Biblioteca similar a React --> 
+
+```js
+// pnpm astro add preact
+import { useState } from "preact/hooks";
+```
+
+Por defecto los componentes jsx (y de otro tipo) son estáticos para hacerlos interactivos hay que pasarles la directiva `client`, la opción más usada es `visible` --> `<Counter client:visible />`
+
+### Persistencia de la información
+
+Astro permite que la información persista con la directiva: `transition:persist`. Esta directiva se carga en el componente de astro que carga los componentes que se necesita que sean interactivos.
+
+Esto hace que la información, no se pierda al hacer transiciones entre páginas.
+
